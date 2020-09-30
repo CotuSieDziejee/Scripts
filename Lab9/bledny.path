@@ -1,0 +1,68 @@
+--- bledny.cpp	2020-06-01 23:56:46.649825743 +0200
++++ bledny_poprawiony.cpp	2020-06-01 23:57:28.097325951 +0200
+@@ -1,7 +1,7 @@
+ #include <iostream>
+ #include <fstream>
+ #include <cstdlib>
+-
++#include <string>
+ using namespace std;
+ 
+ double** przydziel_pamiec(int n, int m) {
+@@ -29,20 +29,22 @@
+   }
+ }
+ 
+-void wczytaj_macierze(char* const nazwa,
+-		      double** tab1, int& n1, int& m1,
+-		      double** tab2, int& n2, int& m2) {
++void wczytaj_macierze(char* nazwa,
++		      double**& tab1, int& n1, int& m1,
++		      double**& tab2, int& n2, int& m2) {
+   ifstream plik(nazwa);
+   plik >> n1 >> m1;
++  tab1 = przydziel_pamiec(n1, m1);
+   for (int i = 0; i < n1; ++i) {
+     for (int j = 0; j < m1; ++j)
+-      plik >> tab2[i][j];
++      plik >> tab1[i][j];
+   }
+ 
+   plik >> n1 >> m1;
++  tab2 = przydziel_pamiec(n2, m2);
+   for (int i = 0; i < n2; ++i) {
+     for (int j = 0; j < m2; ++j)
+-      plik >> tab1[i][j];
++      plik >> tab2[i][j];
+   }
+ 
+ }
+@@ -52,7 +54,7 @@
+   if (n1 == n2 && m1 == m2) {
+     n = n1;
+     m = n2;
+-    double** tab;
++    double** tab = przydziel_pamiec(n, m);
+     for (int i = 0; i <= n - 1; ++i) {
+       for (int j = 0; j <= m - 1; ++j)
+ 	tab[i][j] = tab1[i][j] + tab2[i][j];
+@@ -88,17 +90,15 @@
+ 
+ int main(int argc, char* argv[]) {
+   if (argc > 1) {
+-
+-    int A_n, A_m, B_n, B_m;
++    int A_n, A_m, B_n, B_m, C_n, C_m, D_n, D_m;
+     double** A = NULL;
+     double** B = NULL;
++
+     wczytaj_macierze(argv[1], A, A_m, A_n, B, B_m, B_n);
+ 
+-    int C_n, C_m;
+     double** C = dodawanie(A, A_n, A_m, B, B_n, B_m, C_n, C_m);
+     zapisz_macierz(argv[1], C, C_n, C_m);
+ 
+-    int D_n, D_m;
+     double** D = mnozenie(A, A_n, A_m, B, B_n, B_m, D_n, D_m);
+     zapisz_macierz(argv[1], D, D_n, D_m);
+ 

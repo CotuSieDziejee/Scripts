@@ -1,0 +1,30 @@
+kamil@kamil-Lenovo-G700:~/Pulpit/9$ gdb --args a.out 5 10
+GNU gdb (Ubuntu 8.1-0ubuntu3) 8.1.0.20180409-git
+Copyright (C) 2018 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+<http://www.gnu.org/software/gdb/documentation/>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from a.out...done.
+(gdb) break 36
+Breakpoint 1 at 0xbc7: file ./newton.cpp, line 36.
+(gdb) run
+Starting program: /home/kamil/Pulpit/9/a.out 5 10
+
+Breakpoint 1, main (argc=3, argv=0x7fffffffdf78) at ./newton.cpp:36
+36	    cout << "Rezultat: " << wynik << endl;
+(gdb) info locals
+iteracje = 5
+start = 10
+wynik = 3.999999906468664
+(gdb) Quit
+(gdb) 
+
